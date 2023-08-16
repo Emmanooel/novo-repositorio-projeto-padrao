@@ -23,7 +23,7 @@ type Config struct {
 }
 
 func ConnectionDb() (*gorm.DB, error) {
-	configFile, err := ioutil.ReadFile("/home/emmanoel/projects/ProjetoPadrao/database.yaml")
+	configFile, err := ioutil.ReadFile("./database.yaml")
 	if err != nil {
 		log.Fatalf("Erro ao obter o arquivo de configuração \n error: %v", err)
 		return nil, err
