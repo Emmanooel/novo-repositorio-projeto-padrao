@@ -1,15 +1,16 @@
 package domain
 
 type Person struct {
+	Login    Login  `gorm:"embedded"`
 	Name     string `json:"name"`
 	Birthday string `json:"birthday"`
 	Phone    int    `json:"phone"`
-	score    int
+	Score    int    `json:"score"`
 }
 
 type Login struct {
-	Email    string
-	Password string
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 func (personBody Person) VerifyStruct() (bool, string) {

@@ -24,5 +24,5 @@ func CreatePerson(person *domain.Person, c *fiber.Ctx) error {
 	}
 
 	log.Println(result)
-	return c.Status(fiber.StatusCreated).JSON(person)
+	return c.Status(fiber.StatusCreated).JSON(result.Statement.Statement.Model)
 }
