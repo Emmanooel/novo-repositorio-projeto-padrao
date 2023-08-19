@@ -7,21 +7,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func ControllerGetPerson(c *fiber.Ctx) error {
-	body := new(domain.Person)
+func ControllerLogin(c *fiber.Ctx) error {
+	body := new(domain.Login)
 	bodyReq := c.BodyParser(body)
 
 	if bodyReq != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "[controller get person] error parse struct"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "[controller login] error parse struct"})
 	}
 
-	verify, err := body.VerifyPerson()
-
+	verify, err := body.VerifyLogin()
 	if verify == false {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})
 	}
 
-	getPerson := models.ReadPerson(body, c)
-
-	return getPerson
+	login := models.FindByLogin(body, c)
+	return login
 }

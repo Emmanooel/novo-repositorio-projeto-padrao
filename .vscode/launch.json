@@ -1,0 +1,32 @@
+{
+    "version":"0.2.0",
+    "configurations":[
+        
+        {
+            "name":"Test: Simple",
+            "type":"go",
+            "request":"launch",
+            "mode":"debug",
+            "program":"${workspaceFolder}/cmd",
+            "env":{},
+            "args":[],
+            "showLog":true
+        },
+        {
+            "name":"Test: Env And Args",
+            "type":"go",
+            "request":"launch",
+            "mode":"debug",
+            "program":"${workspaceFolder}/cmd",
+            "envFile":"${workspaceFolder}/envfile.env",
+            "env":{
+                "HOST":"test.com"
+            },
+            "args":[
+                "redirect",
+                "test"
+            ],
+            "showLog":true
+        }
+    ]
+}

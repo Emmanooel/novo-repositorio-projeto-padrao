@@ -15,7 +15,7 @@ func ControllerRegisterPerson(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "error parse struct"})
 	}
 
-	filledStruct, err := body.VerifyStruct()
+	filledStruct, err := body.VerifyPerson()
 
 	if filledStruct == false {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})

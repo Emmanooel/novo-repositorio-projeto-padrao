@@ -13,16 +13,23 @@ type Login struct {
 	Password string `json:"password"`
 }
 
-func (personBody Person) VerifyStruct() (bool, string) {
+func (personBody *Person) VerifyPerson() (bool, string) {
 	if personBody.Name == "" {
-		err := "name required"
-		return false, err
+		return false, "name required"
 	} else if personBody.Birthday == "" {
-		err := "birthday required"
-		return false, err
+		return false, "birthday required"
 	} else if personBody.Phone == 0 {
-		err := "phone required"
-		return false, err
+		return false, "phone required"
+	}
+
+	return true, ""
+}
+
+func (loginBody *Login) VerifyLogin() (bool, string) {
+	if loginBody.Email == "" {
+		return false, "email required"
+	} else if loginBody.Password == "" {
+		return false, "password required"
 	}
 
 	return true, ""
