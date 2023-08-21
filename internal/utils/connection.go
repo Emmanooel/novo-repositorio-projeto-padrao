@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"projetoPadrao/internal/domain"
 
 	"gopkg.in/yaml.v2"
 	"gorm.io/driver/postgres"
@@ -23,7 +24,7 @@ type Config struct {
 }
 
 func ConnectionDb() (*gorm.DB, error) {
-	configFile, err := ioutil.ReadFile("/home/emmanoel/projects/apiProjetoPadrao/database.yaml")
+	configFile, err := ioutil.ReadFile("/home/emmanoel/projects/novo-repositorio-projeto-padrao/database.yaml")
 	if err != nil {
 		log.Fatalf("Erro ao obter o arquivo de configuração \n error: %v", err)
 		return nil, err
@@ -43,6 +44,11 @@ func ConnectionDb() (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 	if err != nil {
 		return nil, err
+	}
+
+	err = db.AutoMigrate(&domain.Person{})
+	if err != nil {
+		log.Println("[connection] Erro ao criar tabelas: " + err.Error())
 	}
 
 	return db, nil

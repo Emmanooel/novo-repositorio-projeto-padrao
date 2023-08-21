@@ -2,11 +2,10 @@ package models
 
 import (
 	"fmt"
+	"github.com/gofiber/fiber/v2"
 	"log"
 	"projetoPadrao/internal/domain"
 	"projetoPadrao/internal/utils"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 func CreatePerson(person *domain.Person, c *fiber.Ctx) error {
@@ -23,6 +22,5 @@ func CreatePerson(person *domain.Person, c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": result.Error.Error()})
 	}
 
-	log.Println(result)
-	return c.Status(fiber.StatusCreated).JSON(result.Statement.Statement.Model)
+	return c.Status(fiber.StatusCreated).JSON(&person)
 }

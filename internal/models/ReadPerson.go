@@ -18,15 +18,15 @@ func ReadPerson(person *domain.Person, c *fiber.Ctx) error {
 		log.Println(err)
 		return fiber.NewError(fiber.StatusBadRequest, err)
 	}
-
-	result := db.Table("person").Find(person)
+	var user domain.Person
+	result := db.Table("person").Where(&person).First(&user)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "[Read person] pessoa não encontrada"})
 	}
 
-	log.Println(result.Statement.Model)
-	return c.Status(fiber.StatusCreated).JSON(result.Statement.Model)
+	log.Println(user)
+	return c.Status(fiber.StatusCreated).JSON(user)
 }
 
 func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
@@ -38,11 +38,12 @@ func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err)
 	}
 
-	result := db.Table("person").Find(login)
+	var user domain.Login
+	result := db.Table("person").Where(&login).First(&user)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "[Find by Email] Login não encontrado"})
 	}
-	log.Println(result.Statement.Model)
-	return c.Status(fiber.StatusOK).JSON(result.Statement.Model)
+	log.Println(user)
+	return c.Status(fiber.StatusOK).JSON(user)
 }
