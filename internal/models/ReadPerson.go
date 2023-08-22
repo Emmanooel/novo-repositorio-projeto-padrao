@@ -19,7 +19,7 @@ func ReadPerson(person *domain.Person, c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err)
 	}
 	var user domain.Person
-	result := db.Table("person").Where(&person).First(&user)
+	result := db.Table("people").Where(&person).First(&user)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "[Read person] pessoa não encontrada"})
@@ -39,7 +39,7 @@ func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 	}
 
 	var user domain.Person
-	result := db.Table("person").Where(&login).First(&user)
+	result := db.Table("people").Where(&login).First(&user)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "[Find by Email] Login não encontrado"})
@@ -57,7 +57,7 @@ func Ranking(c *fiber.Ctx) error {
 	}
 
 	var ranking []domain.Ranking
-	result := db.Table("person").
+	result := db.Table("people").
 		Select("id, name, score").
 		Order("score DESC").Scan(&ranking)
 

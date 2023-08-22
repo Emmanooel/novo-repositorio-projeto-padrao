@@ -1,12 +1,17 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Person struct {
+	gorm.Model
 	ID       int
 	Login    Login  `gorm:"embedded"`
 	Name     string `gorm:"unique" json:"name"`
-	Birthday string `gorm:"type.date" json:"birthday"`
+	Birthday string `gorm:"type:date" json:"birthday"`
 	Phone    int    `json:"phone"`
 	Score    int    `json:"score"`
 }
@@ -17,7 +22,6 @@ type Login struct {
 }
 
 type Ranking struct {
-	Id    int    `json:"id"`
 	Name  string `json:"name"`
 	Score int    `json:"score"`
 }
