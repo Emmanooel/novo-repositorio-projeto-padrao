@@ -2,10 +2,11 @@ package models
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"log"
 	"projetoPadrao/internal/domain"
 	"projetoPadrao/internal/utils"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func CreatePerson(person *domain.Person, c *fiber.Ctx) error {
@@ -16,11 +17,11 @@ func CreatePerson(person *domain.Person, c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err})
 	}
 
-	result := db.Table("person").Create(person)
+	result := db.Table("people").Create(person)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": result.Error.Error()})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "[create person]" + result.Error.Error()})
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(&person)
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"status": "person created"})
 }

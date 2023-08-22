@@ -38,7 +38,7 @@ func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err)
 	}
 
-	var user domain.Login
+	var user domain.Person
 	result := db.Table("person").Where(&login).First(&user)
 
 	if result.Error != nil {
@@ -46,4 +46,24 @@ func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 	}
 	log.Println(user)
 	return c.Status(fiber.StatusOK).JSON(user)
+}
+
+func Ranking(c *fiber.Ctx) error {
+	db, err := utils.ConnectionDb()
+
+	if err != nil {
+		fm := fmt.Sprintf("[ranking] Error ao conectar com o banco de dados \n error: %v", err.Error())
+		return fiber.NewError(fiber.StatusBadRequest, fm)
+	}
+
+	var ranking []domain.Ranking
+	result := db.Table("person").
+		Select("id, name, score").
+		Order("score DESC").Scan(&ranking)
+
+	if result.Error != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "[Ranking] error ao consultar banco de dados")
+	}
+
+	return c.Status(fiber.StatusOK).JSON(ranking)
 }

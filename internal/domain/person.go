@@ -1,16 +1,29 @@
 package domain
 
+import "time"
+
 type Person struct {
+	ID       int
 	Login    Login  `gorm:"embedded"`
-	Name     string `json:"name"`
-	Birthday string `json:"birthday"`
+	Name     string `gorm:"unique" json:"name"`
+	Birthday string `gorm:"type.date" json:"birthday"`
 	Phone    int    `json:"phone"`
 	Score    int    `json:"score"`
 }
 
 type Login struct {
-	Email    string `json:"email"`
+	Email    string `gorm:"unique" json:"email"`
 	Password string `json:"password"`
+}
+
+type Ranking struct {
+	Id    int    `json:"id"`
+	Name  string `json:"name"`
+	Score int    `json:"score"`
+}
+
+type CustomDateType struct {
+	time.Time
 }
 
 func (personBody *Person) VerifyPerson() (bool, string) {
