@@ -9,10 +9,10 @@ import (
 func main() {
 	app := fiber.New()
 
-	app.Post("/person", controller.ControllerRegisterPerson)
-	app.Get("/person", controller.ControllerGetPerson)
-	app.Get("/login", controller.ControllerLogin)
-	app.Get("/ranking", controller.ControllerGetRanking)
-	app.Post("/score", controller.ControllerInsertScore)
+	app.Post("/person", controller.CreatePerson)
+	app.Get("/person", controller.GetPerson)
+	app.Get("/login", controller.Login)
+	app.Get("/ranking", controller.GetRanking)
+	app.Post("/score", controller.InsertScore)
 	app.Listen(":3000")
 }
