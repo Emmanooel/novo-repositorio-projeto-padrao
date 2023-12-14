@@ -29,6 +29,7 @@ func ReadPerson(person *domain.Person, c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(user)
 }
 
+//get person by login
 func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 	db, err := utils.ConnectionDb()
 
@@ -48,6 +49,7 @@ func FindByLogin(login *domain.Login, c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
+//get ranking
 func Ranking(c *fiber.Ctx) error {
 	db, err := utils.ConnectionDb()
 
