@@ -13,5 +13,6 @@ func main() {
 	app.Get("/person", controller.ControllerGetPerson)
 	app.Get("/login", controller.ControllerLogin)
 	app.Get("/ranking", controller.ControllerGetRanking)
+	app.Post("/score", controller.ControllerInsertScore)
 	app.Listen(":3000")
 }
